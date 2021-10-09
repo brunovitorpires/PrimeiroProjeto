@@ -1,112 +1,111 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import React from "react"
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+  Box,
+  FlatList,
+  Heading,
+  Avatar,
+  HStack,
+  VStack,
   Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+  Spacer,
+  Center,
+  NativeBaseProvider,
+} from "native-base"
+export const Example = () => {
+  const data = [
+    {
+      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      fullName: "Danilo Farias",
+      timeStamp: "12:47 PM",
+      recentText: "(81) 9 9999-9999",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/135849665/23112008_028__400x400.jpg",
+    },
+    {
+      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      fullName: "Bruno Vitor",
+      timeStamp: "11:11 PM",
+      recentText: "(81) 9 9999-9999",
+      avatarUrl:
+        "https://pbs.twimg.com/profile_images/1156365784672854016/nmCkDchM.jpg",
+    },
+    
+  ]
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+    <Box
+      w={{
+        base: "100%",
+        md: "25%",
+      }}
+    >
+      <Heading fontSize="xl" p="4" pb="3">
+        Contatos
+      </Heading>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Box
+            borderBottomWidth="1"
+            _dark={{
+              borderColor: "gray.600",
+            }}
+            borderColor="coolGray.200"
+            pl="4"
+            pr="5"
+            py="2"
+          >
+            <HStack space={3} justifyContent="space-between">
+              <Avatar
+                size="48px"
+                source={{
+                  uri: item.avatarUrl,
+                }}
+              />
+              <VStack>
+                <Text
+                  _dark={{
+                    color: "warmGray.50",
+                  }}
+                  color="coolGray.800"
+                  bold
+                >
+                  {item.fullName}
+                </Text>
+                <Text
+                  color="coolGray.600"
+                  _dark={{
+                    color: "warmGray.200",
+                  }}
+                >
+                  {item.recentText}
+                </Text>
+              </VStack>
+              <Spacer />
+              <Text
+                fontSize="xs"
+                _dark={{
+                  color: "warmGray.50",
+                }}
+                color="coolGray.800"
+                alignSelf="flex-start"
+              >
+                {item.timeStamp}
+              </Text>
+            </HStack>
+          </Box>
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </Box>
+  )
+}
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+export default () => {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+    <NativeBaseProvider>
+      <Center flex="1" >
+        <Example />
+      </Center>
+    </NativeBaseProvider>
+  )
+}
